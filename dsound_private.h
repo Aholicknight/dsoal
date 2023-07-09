@@ -489,14 +489,10 @@ enum {
  */
 #define MAX_HWBUFFERS 128
 
-#define MAX_SOURCES 512
+#define MAX_SOURCES 1024
 typedef struct SourceCollection {
     DWORD maxhw_alloc, availhw_num;
     DWORD maxsw_alloc, availsw_num;
-    /* "Hardware" sources start at 0, and "software" sources start at
-     * maxhw_alloc. Total sources is maxhw_alloc+maxsw_alloc.
-     */
-    ALuint ids[MAX_SOURCES];
 } SourceCollection;
 
 typedef struct DeviceShare {
@@ -511,10 +507,6 @@ typedef struct DeviceShare {
     CRITICAL_SECTION crst;
 
     SourceCollection sources;
-
-    EAX30SOURCEPROPERTIES default_srcprops;
-    EAXSOURCEALLSENDPROPERTIES default_srcsend[EAX_MAX_FXSLOTS];
-    GUID default_srcslots[EAX_MAX_ACTIVE_FXSLOTS];
 
     HANDLE thread_hdl;
     DWORD thread_id;
